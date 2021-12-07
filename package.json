@@ -4,7 +4,16 @@
   "description": "API de filmes desenvolvido como avaliação parcial da semana de backend do módulo de fullstack 2 da Blue Edtech.",
   "author": "José Pereira Macedo <arseniumgx@gmail.com",
   "repository": "git@github.com:ArseniumGX/movies-plus.git",
-  "keywords": ["nodejs", "javascrit", "nestjs", "typescript", "backend", "prisma", "prisma", "rest-api"],
+  "keywords": [
+    "nodejs",
+    "javascrit",
+    "nestjs",
+    "typescript",
+    "backend",
+    "prisma",
+    "prisma",
+    "rest-api"
+  ],
   "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
@@ -25,6 +34,7 @@
     "@nestjs/common": "^8.0.0",
     "@nestjs/core": "^8.0.0",
     "@nestjs/platform-express": "^8.0.0",
+    "prisma": "^3.6.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0"
