@@ -1,9 +1,9 @@
 {
-  "name": "movies-plus",
+  "name": "voidplus",
   "version": "1.0.0",
   "description": "API de filmes desenvolvido como avaliação parcial da semana de backend do módulo de fullstack 2 da Blue Edtech.",
-  "author": "José Pereira Macedo <arseniumgx@gmail.com",
-  "repository": "git@github.com:ArseniumGX/movies-plus.git",
+  "author": "José Pereira Macedo <arseniumgx@gmail.com>",
+  "repository": "git@github.com:ArseniumGX/voidplus.git",
   "keywords": [
     "nodejs",
     "javascrit",
