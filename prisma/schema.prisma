@@ -10,47 +10,103 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id        String            @id @default(uuid())
+  name      String?
+  birth     DateTime?
+  email     String            @unique
+  password  String
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  movie     UserLikesMovies[]
+}
+
+model UserLikesMovies {
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String
+  Movies    Movies?  @relation(fields: [moviesId], references: [id])
+  moviesId  String
+  like      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@id([userId, moviesId])
+}
+
 model Movies {
-  id          String    @id @default(uuid())
-  title       String    @unique
+  id          String            @id @default(uuid())
+  title       String            @unique
   description String?
   release     DateTime?
   duration    String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  trailers    Trailers[]
+  actors      ActorOnMovies[]
+  gender      GenderOnMovie[]
+  producer    ProducerOnMovie[]
+  likeUser    UserLikesMovies[]
 }
 
 model Trailers {
-  id    String  @id @default(uuid())
-  title String?
-  url   String
+  id       String  @id @default(uuid())
+  title    String?
+  url      String
+  Movies   Movies? @relation(fields: [moviesId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  moviesId String?
 }
 
 model Actors {
-  id        String    @id @default(uuid())
-  name      String    @unique
-  birth     DateTime?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id     String          @id @default(uuid())
+  name   String          @unique
+  birth  DateTime?
+  movies ActorOnMovies[]
+}
+
+model ActorOnMovies {
+  Actors    Actors?  @relation(fields: [actorsId], references: [id])
+  actorsId  String
+  Movies    Movies?  @relation(fields: [moviesId], references: [id])
+  moviesId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@id([actorsId, moviesId])
 }
 
 model Genders {
-  id   String @id @default(uuid())
-  name String @unique
+  id     String          @id @default(uuid())
+  name   String          @unique
+  movies GenderOnMovie[]
+}
+
+model GenderOnMovie {
+  Genders   Genders? @relation(fields: [gendersId], references: [id])
+  gendersId String
+  Movies    Movies?  @relation(fields: [moviesId], references: [id])
+  moviesId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+
+  @@id([gendersId, moviesId])
 }
 
 model Producers {
-  id      String  @id @default(uuid())
-  name    String  @unique
+  id      String            @id @default(uuid())
+  name    String            @unique
   site    String?
   address String?
+  movies  ProducerOnMovie[]
 }
 
-model User {
-  id        String   @id @default(uuid())
-  name      String?
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model ProducerOnMovie {
+  Producers   Producers? @relation(fields: [producersId], references: [id])
+  producersId String
+  Movies      Movies?    @relation(fields: [moviesId], references: [id])
+  moviesId    String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@id([producersId, moviesId])
 }
