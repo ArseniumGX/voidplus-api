@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
 import { UserModule } from './user/user.module';
+import { MovieModule } from './movie/movie.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [UserModule],
+  imports: [UserModule, MovieModule, AuthModule],
   providers: []
 })
 export class AppModule {}
