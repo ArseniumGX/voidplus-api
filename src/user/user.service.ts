@@ -5,7 +5,6 @@ import { User } from '@prisma/client';
 import { PrismaService } from '../prisma.service';
 import * as bcrypt from 'bcrypt';
 
-
 @Injectable()
 export class UserService {
   constructor(private readonly prisma: PrismaService) { }
@@ -23,7 +22,7 @@ export class UserService {
 
     if(emailExists) throw new ConflictException('Email já cadastrado!');
 
-    const salt = 20;
+    const salt = 10;
     const hashPassword = await bcrypt.hash(data.password, salt)
 
     const user = await this.prisma.user.create({ 

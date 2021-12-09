@@ -4,7 +4,6 @@ import { MovieModule } from './movie/movie.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [UserModule, MovieModule, AuthModule],
-  providers: []
+  imports: [UserModule, MovieModule, AuthModule]
 })
 export class AppModule {}
