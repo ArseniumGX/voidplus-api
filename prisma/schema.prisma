@@ -19,7 +19,6 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   // likeMovies UserLikesMovies[]
-  // imagesId  String?
 }
 
 // model UserLikesMovies {
@@ -35,30 +34,26 @@ model User {
 // }
 
 model Movies {
-  id          String   @id @default(uuid())
+  id          String     @id @default(uuid())
   title       String
   cover       String?
   description String?
   year        Int?
   duration    String?
-  trailer     String?
   rating      Float?
-  genders     String[]
-  actors      String[]
-  producers   String[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
   // likeUser    UserLikesMovies[]
-  // imagesId    String?
+  trailers    Trailers[]
 }
 
-// model Trailers {
-//   id       String  @id @default(uuid())
-//   title    String?
-//   url      String
-//   Movies   Movies? @relation(fields: [moviesId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-//   moviesId String?
-// }
+model Trailers {
+  id       String  @id @default(uuid())
+  title    String?
+  url      String
+  Movies   Movies? @relation(fields: [moviesId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  moviesId String?
+}
 
 // model Actors {
 //   id     String    @id @default(uuid())
