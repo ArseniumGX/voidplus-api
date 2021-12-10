@@ -3,7 +3,7 @@ import {
   Injectable,
   NotFoundException
 } from '@nestjs/common';
-import { Movies, Prisma } from '@prisma/client';
+import { Movies } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
@@ -12,17 +12,7 @@ import { UpdateMovieDto } from './dto/update-movie.dto';
 export class MovieService {
   constructor(private readonly prisma: PrismaService) {}
 
-  private readonly _include: Prisma.MoviesInclude = {
-    genders: {
-      select: {
-        name: true
-      }
-    }
-  };
-
   async create(data: CreateMovieDto): Promise<Movies> {
-    console.log(data.genders);
-
     const movieExists = await this.prisma.movies.findUnique({
       where: {
         title_year: {
@@ -40,15 +30,12 @@ export class MovieService {
   }
 
   async findAll(): Promise<Movies[]> {
-    return await this.prisma.movies.findMany({
-      include: this._include
-    });
+    return await this.prisma.movies.findMany();
   }
 
   async findOne(id: string): Promise<Movies> {
     const movie = await this.prisma.movies.findUnique({
       where: { id },
-      include: this._include
     });
 
     if (!movie) throw new NotFoundException('Filme não cadastrado!');
@@ -62,16 +49,7 @@ export class MovieService {
     if (!movieExists) throw new NotFoundException('Filme não encontrado!');
 
     const movie = await this.prisma.movies.update({
-      data: {
-        ...data,
-        genders: {
-          create: [
-            {
-              name: 'lkska'
-            }
-          ]
-        }
-      },
+      data,
       where: { id }
     });
 
@@ -88,5 +66,16 @@ export class MovieService {
     });
 
     return { message: 'Filme deletado com sucesso!' };
+  }
+
+  async watched(id: string){
+    const user = await this.prisma.movies.update({
+      where: { id },
+      data: {
+        watched: true
+      }
+    })
+    
+    return user
   }
 }

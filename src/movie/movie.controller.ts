@@ -14,6 +14,7 @@ import { UpdateMovieDto } from './dto/update-movie.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { Movies } from '@prisma/client';
 import { AuthGuard } from '@nestjs/passport';
+import { get } from 'http';
 
 @Controller('movie')
 @ApiTags('Movies')
@@ -49,5 +50,10 @@ export class MovieController {
   @UseGuards(AuthGuard('jwt'))
   remove(@Param('id') id: string): Promise<{ message: string }> {
     return this.movieService.remove(id);
+  }
+
+  @Get(':id/watched')
+  watched(@Param('id') id: string){
+    return this.movieService.watched(id)
   }
 }
