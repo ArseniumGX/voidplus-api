@@ -35,7 +35,7 @@ export class MovieService {
 
   async findOne(id: string): Promise<Movies> {
     const movie = await this.prisma.movies.findUnique({
-      where: { id },
+      where: { id }
     });
 
     if (!movie) throw new NotFoundException('Filme não cadastrado!');
@@ -68,14 +68,14 @@ export class MovieService {
     return { message: 'Filme deletado com sucesso!' };
   }
 
-  async watched(id: string){
+  async watched(id: string) {
     const user = await this.prisma.movies.update({
       where: { id },
       data: {
         watched: true
       }
-    })
-    
-    return user
+    });
+
+    return user;
   }
 }

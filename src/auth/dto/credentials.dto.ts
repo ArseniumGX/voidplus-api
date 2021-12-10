@@ -14,7 +14,7 @@ export class CredentialsDto {
   /**
    * Informe sua senha cadastrada para sua conta. A senha deve ser validada com
    * um mínimo de 7 e máximo 16 caracteres.
-   * 
+   *
    * @example minhaSenha
    */
   @IsString()

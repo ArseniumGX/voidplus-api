@@ -53,7 +53,7 @@ export class MovieController {
   }
 
   @Get(':id/watched')
-  watched(@Param('id') id: string){
-    return this.movieService.watched(id)
+  watched(@Param('id') id: string) {
+    return this.movieService.watched(id);
   }
 }
