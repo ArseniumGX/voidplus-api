@@ -1,4 +1,9 @@
-import { ConflictException, Injectable, NotAcceptableException, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotAcceptableException,
+  NotFoundException
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from '@prisma/client';
@@ -7,10 +12,11 @@ import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(data: CreateUserDto): Promise<User> {
-    if(data.password !== data.rePassword) throw new NotAcceptableException('Senhas não conferem.');
+    if (data.password !== data.rePassword)
+      throw new NotAcceptableException('Senhas não conferem.');
 
     delete data.rePassword;
 
@@ -20,16 +26,16 @@ export class UserService {
       }
     });
 
-    if(emailExists) throw new ConflictException('Email já cadastrado!');
+    if (emailExists) throw new ConflictException('Email já cadastrado!');
 
     const salt = 10;
-    const hashPassword = await bcrypt.hash(data.password, salt)
+    const hashPassword = await bcrypt.hash(data.password, salt);
 
-    const user = await this.prisma.user.create({ 
+    const user = await this.prisma.user.create({
       data: {
         ...data,
         password: hashPassword
-      } 
+      }
     });
 
     delete user.password;
@@ -42,7 +48,7 @@ export class UserService {
       where: { id }
     });
 
-    if(!user) throw new NotFoundException('Usuário não cadastrado!');
+    if (!user) throw new NotFoundException('Usuário não cadastrado!');
 
     delete user.password;
 
@@ -54,7 +60,7 @@ export class UserService {
       where: { id }
     });
 
-    if(!userExists) throw new NotFoundException('Usuário não cadastrado!');
+    if (!userExists) throw new NotFoundException('Usuário não cadastrado!');
 
     const user = await this.prisma.user.update({
       data,
@@ -66,12 +72,12 @@ export class UserService {
     return user;
   }
 
-   async remove(id: string): Promise<{ message: string }> {
+  async remove(id: string): Promise<{ message: string }> {
     const userExists = await this.prisma.user.findUnique({
       where: { id }
     });
 
-    if(!userExists) throw new NotFoundException('Usuário não cadastrado!');
+    if (!userExists) throw new NotFoundException('Usuário não cadastrado!');
 
     await this.prisma.user.delete({
       where: { id }

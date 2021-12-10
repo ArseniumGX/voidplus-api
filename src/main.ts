@@ -8,12 +8,15 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('VoidPlus API')
-    .setDescription(`API desenvolvida no decorrer do módulo 4 do curso de 
+    .setDescription(
+      `API desenvolvida no decorrer do módulo 4 do curso de 
     certifucação de desenvolvedores da Blue Edtech, especialidade Fullstack. 
-    Este é o primeiro projeto avaliativo do módulo desenvolvido para o backend.`)
+    Este é o primeiro projeto avaliativo do módulo desenvolvido para o backend.`
+    )
     .setVersion('1.0.0')
     .addTag('Users')
     .addTag('Movies')
+    .addTag('Auth')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('/', app, document);

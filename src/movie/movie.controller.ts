@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards
+} from '@nestjs/common';
 import { MovieService } from './movie.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
@@ -12,7 +21,7 @@ export class MovieController {
   constructor(private readonly movieService: MovieService) {}
 
   @Post()
-  @UseGuards(AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   create(@Body() createMovieDto: CreateMovieDto): Promise<Movies> {
     return this.movieService.create(createMovieDto);
   }
@@ -28,11 +37,16 @@ export class MovieController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMovieDto: UpdateMovieDto): Promise<Movies> {
+  @UseGuards(AuthGuard('jwt'))
+  update(
+    @Param('id') id: string,
+    @Body() updateMovieDto: UpdateMovieDto
+  ): Promise<Movies> {
     return this.movieService.update(id, updateMovieDto);
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard('jwt'))
   remove(@Param('id') id: string): Promise<{ message: string }> {
     return this.movieService.remove(id);
   }
