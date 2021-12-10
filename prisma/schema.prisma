@@ -29,9 +29,9 @@ model Movies {
   duration    String?
   rating      Float?
   trailer     String?
-  genres      String[]
-  actors      String[]
-  producer    String[]
+  genres      Json?
+  actors      Json?
+  producer    Json?
   watched     Boolean? @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
