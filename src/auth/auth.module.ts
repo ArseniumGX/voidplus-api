@@ -5,7 +5,6 @@ import { PrismaService } from 'src/prisma.service';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
-import { UserModule } from 'src/user/user.module';
 
 @Module({
   imports: [
@@ -13,7 +12,7 @@ import { UserModule } from 'src/user/user.module';
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       signOptions: {
-        expiresIn: '1m'
+        expiresIn: '10m'
       }
     })
   ],
