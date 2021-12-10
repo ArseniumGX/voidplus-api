@@ -20,11 +20,6 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
-model UserWatchedMovie {
-
-  @@id([])
-}
-
 model Movies {
   id          String   @id @default(uuid())
   title       String
@@ -35,6 +30,9 @@ model Movies {
   rating      Float?
   trailer     String?
   genres      String[]
+  actors      String[]
+  producer    String[]
+  watched     Boolean? @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
