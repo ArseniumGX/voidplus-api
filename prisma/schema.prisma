@@ -22,7 +22,7 @@ model User {
 }
 
 model Movies {
-  id          String   @id @default(uuid())
+  id          String     @id @default(uuid())
   title       String
   cover       String?
   description String?
@@ -30,12 +30,30 @@ model Movies {
   duration    String?
   rating      Float?
   trailer     String?
-  genres      Json?
-  actors      Json?
-  producer    Json?
+  genres      Genres[]
+  actors      Actors[]
+  producer    Producer[]
   watched     User[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 
   @@unique([title, year])
+}
+
+model Genres {
+  id     String   @id @default(uuid())
+  name   String   @unique
+  movies Movies[]
+}
+
+model Actors {
+  id     String   @id @default(uuid())
+  name   String   @unique
+  movies Movies[]
+}
+
+model Producer {
+  id     String   @id @default(uuid())
+  name   String   @unique
+  movies Movies[]
 }
