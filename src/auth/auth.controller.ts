@@ -25,8 +25,8 @@ export class AuthController {
 
   @Get('profile')
   @UseGuards(AuthGuard())
-  profile(@AuthUser() user: User): User{
-    return user
+  profile(@AuthUser() user: User): User {
+    return user;
   }
 
   @Get('is-logged')

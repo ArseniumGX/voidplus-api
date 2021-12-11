@@ -46,19 +46,19 @@ export class UserController {
 
   @Patch('watched/:id')
   @UseGuards(AuthGuard())
-  watched(@AuthUser() user: User, @Param('id') movieId: string){
-    return this.userService.markWatched(user, movieId)
+  watched(@AuthUser() user: User, @Param('id') movieId: string) {
+    return this.userService.markWatched(user, movieId);
   }
 
   @Patch('unwatched/:id')
   @UseGuards(AuthGuard())
-  unwatched(@AuthUser() user: User, @Param('id') movieId: string){
-    return this.userService.unmarkWatched(user, movieId)
+  unwatched(@AuthUser() user: User, @Param('id') movieId: string) {
+    return this.userService.unmarkWatched(user, movieId);
   }
 
   @Get('watched/list')
   @UseGuards(AuthGuard())
-  allWatched(@AuthUser() user: User){
+  allWatched(@AuthUser() user: User) {
     return this.userService.allWatched(user);
   }
 }

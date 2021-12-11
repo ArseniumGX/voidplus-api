@@ -23,7 +23,7 @@ export class UserService {
         genres: true
       }
     }
-  }
+  };
 
   async create(data: CreateUserDto): Promise<User> {
     if (data.password !== data.rePassword)
@@ -97,12 +97,12 @@ export class UserService {
     return { message: 'Usuário deletado com sucesso!' };
   }
 
-  async markWatched(user: User, movieId: string){
+  async markWatched(user: User, movieId: string) {
     const movie = await this.prisma.movies.findUnique({
-      where: { id: movieId}
-    })
+      where: { id: movieId }
+    });
 
-    if(!movie) throw new NotFoundException('Filme não cadastrado!')
+    if (!movie) throw new NotFoundException('Filme não cadastrado!');
 
     const relation = await this.prisma.user.update({
       where: { id: user.id },
@@ -114,17 +114,17 @@ export class UserService {
         }
       },
       include: this._include
-    })
-    delete relation.password
-    return relation
+    });
+    delete relation.password;
+    return relation;
   }
 
-  async unmarkWatched(user: User, movieId: string){
+  async unmarkWatched(user: User, movieId: string) {
     const movie = await this.prisma.movies.findUnique({
-      where: { id: movieId}
-    })
+      where: { id: movieId }
+    });
 
-    if(!movie) throw new NotFoundException('Filme não cadastrado!')
+    if (!movie) throw new NotFoundException('Filme não cadastrado!');
 
     const query = await this.prisma.user.update({
       where: { id: user.id },
@@ -135,19 +135,19 @@ export class UserService {
           }
         }
       }
-    })
-    delete query.password
-    return query
+    });
+    delete query.password;
+    return query;
   }
 
-  async allWatched(user: User){
+  async allWatched(user: User) {
     const query = await this.prisma.user.findUnique({
       where: { id: user.id },
       include: this._include
-    })
+    });
 
-    delete query.password
+    delete query.password;
 
-    return query
+    return query;
   }
 }
