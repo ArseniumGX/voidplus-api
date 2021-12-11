@@ -6,13 +6,24 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 import { PrismaService } from '../prisma.service';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
   constructor(private readonly prisma: PrismaService) {}
+
+  private readonly _include: Prisma.UserInclude = {
+    watched: {
+      select: {
+        id: true,
+        title: true,
+        year: true,
+        genres: true
+      }
+    }
+  }
 
   async create(data: CreateUserDto): Promise<User> {
     if (data.password !== data.rePassword)
@@ -84,5 +95,59 @@ export class UserService {
     });
 
     return { message: 'Usuário deletado com sucesso!' };
+  }
+
+  async markWatched(user: User, movieId: string){
+    const movie = await this.prisma.movies.findUnique({
+      where: { id: movieId}
+    })
+
+    if(!movie) throw new NotFoundException('Filme não cadastrado!')
+
+    const relation = await this.prisma.user.update({
+      where: { id: user.id },
+      data: {
+        watched: {
+          connect: {
+            id: movie.id
+          }
+        }
+      },
+      include: this._include
+    })
+    delete relation.password
+    return relation
+  }
+
+  async unmarkWatched(user: User, movieId: string){
+    const movie = await this.prisma.movies.findUnique({
+      where: { id: movieId}
+    })
+
+    if(!movie) throw new NotFoundException('Filme não cadastrado!')
+
+    const query = await this.prisma.user.update({
+      where: { id: user.id },
+      data: {
+        watched: {
+          disconnect: {
+            id: movie.id
+          }
+        }
+      }
+    })
+    delete query.password
+    return query
+  }
+
+  async allWatched(user: User){
+    const query = await this.prisma.user.findUnique({
+      where: { id: user.id },
+      include: this._include
+    })
+
+    delete query.password
+
+    return query
   }
 }
