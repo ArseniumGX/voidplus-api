@@ -67,15 +67,4 @@ export class MovieService {
 
     return { message: 'Filme deletado com sucesso!' };
   }
-
-  async watched(id: string) {
-    const user = await this.prisma.movies.update({
-      where: { id },
-      data: {
-        watched: true
-      }
-    });
-
-    return user;
-  }
 }
