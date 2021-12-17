@@ -31,7 +31,7 @@ export class CreateMovieDto {
   @IsOptional()
   @IsUrl()
   @IsNotEmpty()
-  cover?: string;
+  poster?: string;
 
   /**
    * Campo opcional, deve ser preenchido com no mínimo 12 caractere e no máximo
@@ -43,7 +43,7 @@ export class CreateMovieDto {
   @IsOptional()
   @Length(12, 150)
   @IsNotEmpty()
-  description?: string;
+  synopsis?: string;
 
   /**
    * Este campo é obrigatório, deve ser preenchido com um número de 4
