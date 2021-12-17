@@ -20,7 +20,7 @@ async function bootstrap() {
     .addTag('Auth')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('/', app, document);
+  SwaggerModule.setup('api', app, document);
   app.useGlobalPipes(new ValidationPipe());
 
   app.enableCors()
