@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException
@@ -66,5 +67,15 @@ export class MovieService {
     });
 
     return { message: 'Filme deletado com sucesso!' };
+  }
+
+  async createMany(data: CreateMovieDto[]): Promise<{ count: number }>{
+    try{
+      const query = await this.prisma.movies.createMany({ data })
+      return query
+    }catch(error){
+      throw new BadRequestException('De ruim.')
+    }
+
   }
 }

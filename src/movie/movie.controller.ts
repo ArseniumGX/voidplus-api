@@ -27,6 +27,13 @@ export class MovieController {
     return this.movieService.create(createMovieDto);
   }
 
+  @Post('create-many')
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
+  createMany(@Body() createMovieDto: CreateMovieDto[]): Promise<{ count: number }>{
+    return this.movieService.createMany(createMovieDto);
+  }
+
   @Get()
   findAll(): Promise<Movies[]> {
     return this.movieService.findAll();
