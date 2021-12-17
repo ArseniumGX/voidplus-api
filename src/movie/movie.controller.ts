@@ -11,7 +11,7 @@ import {
 import { MovieService } from './movie.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Movies } from '@prisma/client';
 import { AuthGuard } from '@nestjs/passport';
 
@@ -22,6 +22,7 @@ export class MovieController {
 
   @Post()
   @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   create(@Body() createMovieDto: CreateMovieDto): Promise<Movies> {
     return this.movieService.create(createMovieDto);
   }
@@ -31,14 +32,16 @@ export class MovieController {
     return this.movieService.findAll();
   }
 
-  @UseGuards(AuthGuard())
   @Get(':id')
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   findOne(@Param('id') id: string): Promise<Movies> {
     return this.movieService.findOne(id);
   }
 
   @Patch(':id')
   @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   update(
     @Param('id') id: string,
     @Body() updateMovieDto: UpdateMovieDto
@@ -48,6 +51,7 @@ export class MovieController {
 
   @Delete(':id')
   @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   remove(@Param('id') id: string): Promise<{ message: string }> {
     return this.movieService.remove(id);
   }

@@ -14,6 +14,7 @@ async function bootstrap() {
     Este é o primeiro projeto avaliativo do módulo desenvolvido para o backend.`
     )
     .setVersion('1.0.0')
+    .addBearerAuth()
     .addTag('Users')
     .addTag('Movies')
     .addTag('Auth')

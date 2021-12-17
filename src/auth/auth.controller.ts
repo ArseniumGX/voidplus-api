@@ -7,7 +7,7 @@ import {
   UseGuards
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { CredentialsDto } from './dto/credentials.dto';
 import AuthUser from './auth-user.decorator';
@@ -25,12 +25,14 @@ export class AuthController {
 
   @Get('profile')
   @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   profile(@AuthUser() user: User): User {
     return user;
   }
 
   @Get('is-logged')
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   logged(@Headers() headers: { authorization: string }) {
     return this.authService.isLogged(headers.authorization);
   }
