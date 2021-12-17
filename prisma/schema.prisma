@@ -22,20 +22,20 @@ model User {
 }
 
 model Movies {
-  id          String     @id @default(uuid())
-  title       String
-  cover       String?
-  description String?
-  year        Int
-  duration    String?
-  rating      Float?
-  trailer     String?
-  genres      Genres[]
-  actors      Actors[]
-  producer    Producer[]
-  watched     User[]
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  id        String     @id @default(uuid())
+  title     String
+  poster    String?
+  synopsis  String?
+  year      Int
+  duration  String?
+  rating    Float?
+  trailer   String?
+  genres    Genres[]
+  actors    Actors[]
+  producer  Producer[]
+  watched   User[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 
   @@unique([title, year])
 }
