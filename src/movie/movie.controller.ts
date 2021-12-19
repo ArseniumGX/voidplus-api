@@ -40,8 +40,6 @@ export class MovieController {
   }
 
   @Get(':id')
-  @UseGuards(AuthGuard())
-  @ApiBearerAuth()
   findOne(@Param('id') id: string): Promise<Movies> {
     return this.movieService.findOne(id);
   }
