@@ -22,7 +22,7 @@ export class AuthService {
 
     if (!userExists) throw new NotFoundException('Usuário não cadastrado!');
 
-    const passValid = bcrypt.compare(data.password, userExists.password);
+    const passValid = await bcrypt.compare(data.password, userExists.password);
 
     if (!passValid) throw new UnauthorizedException('Senha inválida!');
 
