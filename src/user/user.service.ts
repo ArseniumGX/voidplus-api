@@ -20,7 +20,8 @@ export class UserService {
         id: true,
         title: true,
         year: true,
-        genres: true
+        genres: true,
+        poster: true
       }
     }
   };
